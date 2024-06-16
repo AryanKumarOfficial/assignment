@@ -1,6 +1,8 @@
+import { useRouter } from "next/router";
 import React, { useState } from "react";
 
 const Color = () => {
+  const router = useRouter();
   const [colorForm, setColorForm] = useState({
     color_1: "#ff0000",
     color_2: "#00ff00",
@@ -28,6 +30,7 @@ const Color = () => {
     } else {
       localStorage.setItem("colors", JSON.stringify([color_1, color_2]));
     }
+    router.push("/");
   };
 
   const handleSizeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -48,6 +51,7 @@ const Color = () => {
     } else {
       localStorage.setItem("sizes", JSON.stringify([size]));
     }
+    router.push("/");
   };
 
   return (
@@ -89,7 +93,7 @@ const Color = () => {
         />
         <label
           htmlFor="small"
-          className="cursor-pointer bg-gray-200 px-4 py-2 rounded-md hover:bg-gray-300 transition-colors"
+          className="cursor-pointer bg-gray-200 px-4 py-2 rounded-md hover:bg-gray-300 transition-colors text-xs"
         >
           Small
         </label>
@@ -104,7 +108,7 @@ const Color = () => {
         />
         <label
           htmlFor="medium"
-          className="cursor-pointer bg-gray-200 px-4 py-2 rounded-md hover:bg-gray-300 transition-colors"
+          className="cursor-pointer bg-gray-200 px-4 py-2 rounded-md hover:bg-gray-300 transition-colors text-xs"
         >
           Medium
         </label>
@@ -112,7 +116,7 @@ const Color = () => {
         <input
           type="button"
           value="Add Size"
-          className="bg-blue-500 text-white px-4 py-2 cursor-pointer hover:bg-blue-600 rounded-md capitalize transition-colors"
+          className="bg-blue-500 text-white px-4 py-2 cursor-pointer hover:bg-blue-600 rounded-md capitalize transition-colors text-xs"
           onClick={handleAddSize}
         />
       </div>
