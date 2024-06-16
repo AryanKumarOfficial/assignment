@@ -1,5 +1,5 @@
 import React from "react";
-import Varient from "@/Components/Varients";
+import Varient from "@/components/Varients";
 
 export default function Home() {
   return (

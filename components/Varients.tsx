@@ -10,18 +10,18 @@ const Color = () => {
     size: "small",
   });
 
-  const handleColorChange = (e) => {
+  const handleColorChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setColorForm({
       ...colorForm,
       [e.target.name]: e.target.value,
     });
   };
 
-  const handleAddColor = (e) => {
+  const handleAddColor = (e: React.SyntheticEvent) => {
     e.preventDefault();
     let { color_1, color_2 } = colorForm;
     if (localStorage.getItem("colors")) {
-      let colors = JSON.parse(localStorage.getItem("colors"));
+      let colors: string[] = JSON.parse(localStorage.getItem("colors") || "[]");
       colors = colors.filter((c) => c !== color_1 && c !== color_2);
       colors.push(color_1, color_2);
       localStorage.setItem("colors", JSON.stringify(colors));
@@ -30,25 +30,25 @@ const Color = () => {
     }
   };
 
-  const handleSizeChange = (e) => {
+  const handleSizeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSizeForm({
       ...sizeForm,
       [e.target.name]: e.target.value,
     });
-  }
+  };
 
-  const handleAddSize = (e) => {
+  const handleAddSize = (e: React.SyntheticEvent) => {
     e.preventDefault();
     let { size } = sizeForm;
     if (localStorage.getItem("sizes")) {
-      let sizes = JSON.parse(localStorage.getItem("sizes"));
+      let sizes: string[] = JSON.parse(localStorage.getItem("sizes") || "[]");
       sizes = sizes.filter((s) => s !== size);
       sizes.push(size);
       localStorage.setItem("sizes", JSON.stringify(sizes));
     } else {
       localStorage.setItem("sizes", JSON.stringify([size]));
     }
-  }
+  };
 
   return (
     <section className="varients flex flex-col justify-center items-start gap-4 border p-8 rounded-md border-gray-300">
@@ -118,13 +118,11 @@ const Color = () => {
       </div>
 
       <style jsx>{`
-  input[type="radio"]:checked + label {
-    background-color: #00fd4c; /* Blue color */
-    color: white;
-  }
-`}</style>
-
-
+        input[type="radio"]:checked + label {
+          background-color: #00fd4c; /* Blue color */
+          color: white;
+        }
+      `}</style>
     </section>
   );
 };
