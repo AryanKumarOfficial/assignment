@@ -1,6 +1,9 @@
+import { useRouter } from "next/router";
 import React, { use, useEffect, useState } from "react";
 
 const View = () => {
+  const router = useRouter();
+
   const [colors, setColors] = useState(["#ff0000", "#00ff00"]);
   const [sizes, setSizes] = useState(["small"]);
 
@@ -11,7 +14,7 @@ const View = () => {
     if (localStorage.getItem("sizes")) {
       setSizes(JSON.parse(localStorage.getItem("sizes") || "[]"));
     }
-  }, []);
+  }, [router.query]);
   return (
     <>
       <section className="view flex flex-col justify-center items-start gap-4 border p-8 rounded-md border-gray-300">
