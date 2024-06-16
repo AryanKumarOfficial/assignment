@@ -6,6 +6,10 @@ const Color = () => {
     color_2: "#00ff00",
   });
 
+  const [sizeForm, setSizeForm] = useState({
+    size: "small",
+  });
+
   const handleColorChange = (e) => {
     setColorForm({
       ...colorForm,
@@ -15,16 +19,37 @@ const Color = () => {
 
   const handleAddColor = (e) => {
     e.preventDefault();
-    // store the colors to the localStorage
     let { color_1, color_2 } = colorForm;
     if (localStorage.getItem("colors")) {
       let colors = JSON.parse(localStorage.getItem("colors"));
+      colors = colors.filter((c) => c !== color_1 && c !== color_2);
       colors.push(color_1, color_2);
       localStorage.setItem("colors", JSON.stringify(colors));
     } else {
       localStorage.setItem("colors", JSON.stringify([color_1, color_2]));
     }
   };
+
+  const handleSizeChange = (e) => {
+    setSizeForm({
+      ...sizeForm,
+      [e.target.name]: e.target.value,
+    });
+  }
+
+  const handleAddSize = (e) => {
+    e.preventDefault();
+    let { size } = sizeForm;
+    if (localStorage.getItem("sizes")) {
+      let sizes = JSON.parse(localStorage.getItem("sizes"));
+      sizes = sizes.filter((s) => s !== size);
+      sizes.push(size);
+      localStorage.setItem("sizes", JSON.stringify(sizes));
+    } else {
+      localStorage.setItem("sizes", JSON.stringify([size]));
+    }
+  }
+
   return (
     <section className="varients flex flex-col justify-center items-start gap-4 border p-8 rounded-md border-gray-300">
       <h1 className="uppercase font-bold text-xl">Varients</h1>
@@ -58,24 +83,48 @@ const Color = () => {
           type="radio"
           name="size"
           id="small"
+          className="hidden"
           value="small"
-          className="cursor-pointer"
+          onChange={handleSizeChange}
         />
-        <label htmlFor="small">small</label>
+        <label
+          htmlFor="small"
+          className="cursor-pointer bg-gray-200 px-4 py-2 rounded-md hover:bg-gray-300 transition-colors"
+        >
+          Small
+        </label>
+
         <input
           type="radio"
           name="size"
           id="medium"
+          className="hidden"
           value="medium"
-          className="cursor-pointer"
+          onChange={handleSizeChange}
         />
-        <label htmlFor="medium">medium</label>
+        <label
+          htmlFor="medium"
+          className="cursor-pointer bg-gray-200 px-4 py-2 rounded-md hover:bg-gray-300 transition-colors"
+        >
+          Medium
+        </label>
+
         <input
           type="button"
-          value="add size"
-          className="bg-blue-500 text-white px-2 py-1 text-xs cursor-pointer hover:bg-blue-600 rounded-md capitalize"
+          value="Add Size"
+          className="bg-blue-500 text-white px-4 py-2 cursor-pointer hover:bg-blue-600 rounded-md capitalize transition-colors"
+          onClick={handleAddSize}
         />
       </div>
+
+      <style jsx>{`
+  input[type="radio"]:checked + label {
+    background-color: #00fd4c; /* Blue color */
+    color: white;
+  }
+`}</style>
+
+
     </section>
   );
 };
